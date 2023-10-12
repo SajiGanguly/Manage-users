@@ -124,7 +124,7 @@ const CrudTable = () => {
         <div style={{width:'100%'}}>
          <div >   
         <Typography variant="h4" style={headerStyle} gutterBottom>
-        Manage Users
+        MANAGE USERS
         <div>
   <Button variant="contained" color="secondary" style={buttonstyle}onClick={handleOpenUserRoleModal}>
    User Roles
