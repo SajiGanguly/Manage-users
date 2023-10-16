@@ -1,7 +1,16 @@
 import React, { useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead,Typography, TableRow, Paper, Button, Toolbar , AppBar, Divider} from '@mui/material';
+
+import { Button, Typography, AppBar, Divider } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
 import UserRolesFormModal from './Dialogue';
+import {
+  DataGrid,
+  GridToolbarContainer,
+  GridToolbarColumnsButton,
+  GridToolbarFilterButton,
+  GridToolbarExport,
+  GridToolbarDensitySelector,
+} from '@mui/x-data-grid';
 // import List from '@mui/material/List';
 // import ListItem from '@mui/material/ListItem';
 // import ListItemButton from '@mui/material/ListItemButton';
@@ -11,8 +20,8 @@ import UserRolesFormModal from './Dialogue';
 // import MailIcon from '@mui/icons-material/Mail';
 // Import the icons you use
 // import MailIcon from '@mui/icons-material/Mail';
-import SelectVariants from './UserRole';
-import Fingerprint from '@mui/icons-material/Fingerprint';
+// import SelectVariants from './UserRole';
+// import Fingerprint from '@mui/icons-material/Fingerprint';
 
   const buttonstyle = {
     marginRight: '4px',
@@ -55,8 +64,9 @@ const headerStyle = {
     marginRight:'20px',
     
   };
-  const containerStyle = {
+  const style1 = {
     display:'flex',
+    justifyContent:'space-between',
    
   };
   const logoStyle = {
@@ -66,6 +76,9 @@ const headerStyle = {
     padding: '30px',           // Add 10px of padding inside the div
     marginBottom: '10px',
   };
+  const container2 = {
+    backgroundColor:"#808080",
+  }
 
 const CrudTable = () => {
   // Sample data (you can replace this with your own data)
@@ -94,6 +107,54 @@ const CrudTable = () => {
     setData(updatedData);
   };
 
+  const columns = [
+    {
+      field: 'action',
+      headerName: 'Actions',
+      width: 260,
+      renderCell: (params) => (
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<Edit />}
+            onClick={() => {
+              // Handle edit logic here
+              // You can open a modal or navigate to an edit page
+            }}
+          >
+            Edit
+          </Button>
+          <Button
+            variant="contained"
+            color="error"
+            startIcon={<Delete />}
+            onClick={() => handleDelete(params.row.id)}
+          >
+            Delete
+          </Button>
+        </div>
+      ),
+    },
+    { field: 'username', headerName: 'Username', flex: 1 },
+    { field: 'role', headerName: 'Role', flex: 1 },
+    { field: 'fullname', headerName: 'Full-Name', flex: 1 },
+    { field: 'email', headerName: 'Email', flex: 1 },
+    { field: 'profileimage', headerName: 'Profile-Image', flex: 1 },
+    { field: 'createdat', headerName: 'CreatedAt', flex: 1 },
+  ];
+  function CustomToolbar() {
+    return (
+      <GridToolbarContainer style={container2}>
+        <GridToolbarColumnsButton />
+        <GridToolbarFilterButton />
+        <GridToolbarDensitySelector />
+        <GridToolbarExport />
+      </GridToolbarContainer>
+    );
+  }
+  
+
   return (
     <>
       {/* <div style={{display:'flex'}}>  
@@ -121,93 +182,35 @@ const CrudTable = () => {
         </div>
         </div> */}
         
-        <div style={{width:'100%'}}>
-         <div >   
-        <Typography variant="h4" style={headerStyle} gutterBottom>
-        Manage Users
-        <div>
-  <Button variant="contained" color="secondary" style={buttonstyle}onClick={handleOpenUserRoleModal}>
-   User Roles
- 
-  </Button>
-  
-  <Button variant="contained" color="success" style={buttonstyle}>
-    Add User
-  </Button>
-  </div>
-  <UserRolesFormModal open={openUserRoleModal} onClose={handleCloseUserRoleModal}/>
-</Typography>
-
-</div> 
-
-<div style={barStyle}>
- <navbar>
-   
- </navbar>
-</div>
-
-
-
-     
-     <div style={barStyle1}>
-    <TableContainer component={Paper} >
-      <Table>
-        <TableHead>
-          <TableRow style={tableStyle}>
-          <TableCell>Actions</TableCell>
-            <TableCell>Username</TableCell>
-            <TableCell>Role</TableCell>
-            <TableCell>Full-Name</TableCell>
-            <TableCell>Email</TableCell>
-            <TableCell>Profile-Image</TableCell>
-            <TableCell>CreatedAt</TableCell>
-           
-          </TableRow>
-          
-        </TableHead>
+        <>
         
-        <TableBody>
-            
-          {data.map((item) => (
-            <TableRow key={item.id}>
-              
-              <TableCell>
-              <div style={{ display: 'flex', gap: '10px' }}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  startIcon={<Edit />}
-                  onClick={() => {
-                    // Handle edit logic here
-                    // You can open a modal or navigate to an edit page
-                  }}
-                >
-                  Edit
-                </Button>
-                <Button
-                  variant="contained"
-                  color="error"
-                  startIcon={<Delete />}
-                  onClick={() => handleDelete(item.id)}
-                >
-                  Delete
-                </Button>
-                </div>
-              </TableCell>
-             
-              <TableCell>{item.username}</TableCell>
-              <TableCell>{item.role}</TableCell>
-              <TableCell>{item.fullname}</TableCell>
-              <TableCell>{item.email}</TableCell>
-              <TableCell>{item.profileimage}</TableCell>
-              <TableCell>{item.createdat}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-    </div>
-    </div> 
+        <div>
+        <Typography variant="h4" gutterBottom style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+  <div style={{fontFamily:'fantasy', fontPalette:"dark", textShadow: "2px 2px 7px #000"}}>
+    MANAGE USERS
+  </div>
+  <div>
+    <Button variant="contained" color="secondary" style={{ marginRight: '4px' }} onClick={handleOpenUserRoleModal}>
+      User Roles
+    </Button>
+    <Button variant="contained" color="success" style={{ marginRight: '4px' }}>
+      Add User
+    </Button>
+  </div>
+</Typography>
+<UserRolesFormModal open={openUserRoleModal} onClose={handleCloseUserRoleModal} />
+</div>
+      <DataGrid
+        columns={columns}
+        rows={data}
+        autoHeight
+        pageSize={10}
+        slots={{
+          toolbar: CustomToolbar,
+        }}
+      />
+     
+    </>
     {/* </div> */}
     </>
   );
