@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -10,7 +11,17 @@ export default function SelectVariants() {
   const handleChange = (event) => {
     setAge(event.target.value);
   };
+  
+  const [openUserRolesDialog, setOpenUserRolesDialog] = useState(false);
+  const handleOpenUserRolesDialog = () => {
+    console.log('Opening User Roles Dialog'); // Check if this log is triggered
+    setOpenUserRolesDialog(true);
+  };
 
+  const handleCloseUserRolesDialog = () => {
+    console.log('Closing User Roles Dialog'); // Check if this log is triggered
+    setOpenUserRolesDialog(false);
+  };
   return (
     <div>
       <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
@@ -25,6 +36,7 @@ export default function SelectVariants() {
           <MenuItem value={30}>Backend Developer</MenuItem>
         </Select>
       </FormControl>
+      <SelectVariants open={openUserRolesDialog} onClose={handleOpenUserRolesDialog} />
       
     </div>
   );

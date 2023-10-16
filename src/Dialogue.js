@@ -1,44 +1,22 @@
 import React, { useState } from 'react';
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  TextField,
-  DialogActions,
-  Button,
-} from '@mui/material';
-import SelectVariants from './UserRole';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import Button from '@mui/material/Button';
 
 const UserRolesFormModal = ({ open, onClose }) => {
-  const [userRole, setUserRole] = useState('');
-
-  const handleClose = () => {
-    setUserRole(''); // Clear the input field when the modal is closed
-    onClose();
-  };
-
-  const handleSave = () => {
-    // Add logic to save the user role here (e.g., sending a request to the server)
-    // After saving, you can close the modal
-    handleClose();
-  };
+  // Add your dialog content and logic here
 
   return (
-    <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Add User Role</DialogTitle>
+    <Dialog open={open} onClose={onClose}>
+      <DialogTitle>User Roles</DialogTitle>
       <DialogContent>
-        
-        
-        <SelectVariants/>
-          
-        
+        {/* Add content for user roles here */}
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="primary">
-          Cancel
-        </Button>
-        <Button onClick={handleSave} color="primary">
-          Save
+        <Button onClick={onClose} color="primary">
+          Close
         </Button>
       </DialogActions>
     </Dialog>
